@@ -46,4 +46,13 @@ public class State {
         this.side = side;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "State: {" +
+                "\n\tTile A dirty: " + tileA +
+                ",\n\tTile B dirty: " + tileB +
+                ",\n\tAgent position: " + side +
+                "\n}";
+    }
 }
