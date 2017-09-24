@@ -1,18 +1,33 @@
 package environment;
 
+import agent.State;
 import agent.VacuumCleaner;
 
 public class Environment extends EnvironmentSettings {
+
+    private State initialState;
 
     public Environment() {
         super();
     }
 
-    public void actionPerformed(VacuumCleaner vacuumCleaner, int x, int y) {
+    public State getInitialState() {
 
-        this.addActionCost(vacuumCleaner);
-        this.changeActualState(vacuumCleaner, x, y);
-        this.addActionPerformed(vacuumCleaner, x, y);
+        return initialState;
+    }
+
+    public void setInitialState(State initialState) {
+
+        this.initialState = initialState;
+    }
+
+    public void actionPerformed(VacuumCleaner vacuumCleaner, State actualState, State initialState) {
+
+        if (!actualState.equals(initialState)) {
+            this.addActionCost(vacuumCleaner);
+            this.changeActualState(vacuumCleaner, actualState);
+            this.addActionPerformed(vacuumCleaner, actualState);
+        }
     }
 
     private void addActionCost(VacuumCleaner vacuumCleaner) {
@@ -20,14 +35,14 @@ public class Environment extends EnvironmentSettings {
         vacuumCleaner.setCost(vacuumCleaner.getCost() + 1);
     }
 
-    private void changeActualState(VacuumCleaner vacuumCleaner, int x, int y) {
+    private void changeActualState(VacuumCleaner vacuumCleaner, State state) {
 
-        vacuumCleaner.setState(getGraph()[x][y]);
+        vacuumCleaner.setState(state);
     }
 
-    private void addActionPerformed(VacuumCleaner vacuumCleaner, int x, int y) {
+    private void addActionPerformed(VacuumCleaner vacuumCleaner, State state) {
 
         vacuumCleaner.getActionsList()
-                .add(getGraph()[x][y].getAction());
+                .add(state.getAction());
     }
 }

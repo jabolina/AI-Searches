@@ -5,6 +5,7 @@ public class State {
     private boolean tileA;
     private boolean tileB;
     private char side;
+    private boolean objective;
     private Actions action;
 
     public boolean getTileA() {
@@ -47,12 +48,22 @@ public class State {
         return this;
     }
 
+    public boolean isObjective() {
+
+        return objective;
+    }
+
+    public State objective(boolean objective) {
+        this.objective = objective;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "State: {" +
                 "\n\tTile A dirty: " + tileA +
                 ",\n\tTile B dirty: " + tileB +
                 ",\n\tAgent position: " + side +
-                "\n}";
+                "\n}\n\n";
     }
 }

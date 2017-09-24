@@ -1,5 +1,6 @@
 package agent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VacuumCleaner {
@@ -7,6 +8,11 @@ public class VacuumCleaner {
     private int cost;
     private State state;
     private List<Actions> actionsList;
+
+    public VacuumCleaner() {
+        this.cost = 0;
+        this.actionsList = new ArrayList<>();
+    }
 
     public int getCost() {
 
@@ -36,5 +42,11 @@ public class VacuumCleaner {
     public void setActionsList(List<Actions> actionsList) {
 
         this.actionsList = actionsList;
+    }
+
+    public void printActionList() {
+
+        if (!getActionsList().isEmpty())
+            getActionsList().forEach(actions -> System.out.println(actions.toString()));
     }
 }
