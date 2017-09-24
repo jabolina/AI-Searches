@@ -8,4 +8,6 @@ Possible actions are:
     * Go right
     * Go left
 
-In this repo, have the DFS, BFS and A* searches implemented(later).
+In this repo, have the DFS, BFS and A* searches implemented.
+
+   * Depth First Search implemented on class DepthFirstSearch
