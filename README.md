@@ -11,3 +11,4 @@ Possible actions are:
 In this repo, have the DFS, BFS and A* searches implemented.
 
    * Depth First Search implemented on class DepthFirstSearch
+   * Breadth First Search implemented on classh BreadthFirstSearch (loop problem)
