@@ -24,15 +24,16 @@ public class Environment extends EnvironmentSettings {
     public void actionPerformed(VacuumCleaner vacuumCleaner, State actualState, State initialState) {
 
         if (!actualState.equals(initialState)) {
-            this.addActionCost(vacuumCleaner);
             this.changeActualState(vacuumCleaner, actualState);
+            this.addActionCost(vacuumCleaner);
             this.addActionPerformed(vacuumCleaner, actualState);
         }
     }
 
     private void addActionCost(VacuumCleaner vacuumCleaner) {
 
-        vacuumCleaner.setCost(vacuumCleaner.getCost() + 1);
+        vacuumCleaner.setCost(vacuumCleaner.getCost() +
+                vacuumCleaner.getState().getAction().valueOf(vacuumCleaner.getState().getAction()));
     }
 
     private void changeActualState(VacuumCleaner vacuumCleaner, State state) {

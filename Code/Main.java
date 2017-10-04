@@ -15,7 +15,7 @@ public class Main {
         Environment environment = new Environment();
         VacuumCleaner vacuumCleaner = new VacuumCleaner();
 
-        int initialState = ThreadLocalRandom.current().nextInt(0, 5);
+        int initialState = ThreadLocalRandom.current().nextInt(0, 2);
 
         vacuumCleaner.setState(environment.getPossibleStates().get(initialState));
         environment.setInitialState(vacuumCleaner.getState());
@@ -52,6 +52,8 @@ public class Main {
         if (vacuumCleaner != null) {
             System.out.println("Sequencia de ações até objetivo: \n");
             vacuumCleaner.printActionList();
+            System.out.println("\n\nCusto total:");
+            System.out.println(vacuumCleaner.getCost());
         }
     }
 }

@@ -56,11 +56,11 @@ public class BreadthFirstSearch {
 
                 if ((actualState.equals(environment.getInitialState()))) {
                     row = findRowOnGraph(actualState, environment);
+                    expanded.add(actualState);
                     generateStates(row, environment);
-                    expanded.add(actualState);
                 } else {
-                    generateStates(column, environment);
                     expanded.add(actualState);
+                    generateStates(column, environment);
                 }
 
                 environment.actionPerformed(agent, actualState, environment.getInitialState());
