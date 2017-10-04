@@ -1,5 +1,6 @@
 import agent.VacuumCleaner;
 import environment.Environment;
+import search.BreadthFirstSearch;
 import search.DepthFirstSearch;
 
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public class Main {
         Environment environment = new Environment();
         VacuumCleaner vacuumCleaner = new VacuumCleaner();
 
-        int initialState = ThreadLocalRandom.current().nextInt(0, 8);
+        int initialState = ThreadLocalRandom.current().nextInt(0, 5);
 
         vacuumCleaner.setState(environment.getPossibleStates().get(initialState));
         environment.setInitialState(vacuumCleaner.getState());
@@ -34,17 +35,23 @@ public class Main {
 
                 System.out.println("Inicio da busca em profundidade:\n");
                 vacuumCleaner = depthFirstSearch.DFS(vacuumCleaner, environment);
-
-                if (vacuumCleaner != null) {
-                    System.out.println("Sequencia de ações até objetivo: \n");
-                    vacuumCleaner.printActionList();
-                }
                 break;
 
             case 2:
+                BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(vacuumCleaner.getState());
+
+                System.out.println("Inicio da busca em largura:\n");
+                vacuumCleaner = breadthFirstSearch.BFS(vacuumCleaner, environment);
+
+
                 break;
             case 3:
                 break;
+        }
+
+        if (vacuumCleaner != null) {
+            System.out.println("Sequencia de ações até objetivo: \n");
+            vacuumCleaner.printActionList();
         }
     }
 }

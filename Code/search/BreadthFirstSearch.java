@@ -4,9 +4,10 @@ import agent.State;
 import agent.VacuumCleaner;
 import environment.Environment;
 
+import java.util.*;
+
 import static auxiliary.AuxiliaryFunctions.findColumnOnGraph;
 import static auxiliary.AuxiliaryFunctions.findRowOnGraph;
-
 
 public class BreadthFirstSearch {
 
