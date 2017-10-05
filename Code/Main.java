@@ -1,5 +1,6 @@
 import agent.VacuumCleaner;
 import environment.Environment;
+import search.AStarSearch;
 import search.BreadthFirstSearch;
 import search.DepthFirstSearch;
 
@@ -42,10 +43,13 @@ public class Main {
 
                 System.out.println("Inicio da busca em largura:\n");
                 vacuumCleaner = breadthFirstSearch.BFS(vacuumCleaner, environment);
-
-
                 break;
+
             case 3:
+                AStarSearch aStarSearch = new AStarSearch(vacuumCleaner.getState());
+
+                System.out.println("Inicio da busca A*:\n");
+                vacuumCleaner = aStarSearch.AStar(vacuumCleaner, environment);
                 break;
         }
 
