@@ -1,11 +1,17 @@
+import agent.State;
 import agent.VacuumCleaner;
+import auxiliary.AuxiliaryFunctions;
 import environment.Environment;
 import search.AStarSearch;
 import search.BreadthFirstSearch;
 import search.DepthFirstSearch;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static auxiliary.AuxiliaryFunctions.*;
 
 public class Main {
 
@@ -15,10 +21,11 @@ public class Main {
 
         Environment environment = new Environment();
         VacuumCleaner vacuumCleaner = new VacuumCleaner();
+        List<State> states = null;
 
-        int initialState = ThreadLocalRandom.current().nextInt(0, 2);
+        int initialState = ThreadLocalRandom.current().nextInt(0, 7);
 
-        vacuumCleaner.setState(environment.getPossibleStates().get(initialState));
+        vacuumCleaner.setState(environment.getPossibleStates().get(initialState).father(null).heuristicCost(0));
         environment.setInitialState(vacuumCleaner.getState());
 
         System.out.println("--------ESCOLHA A BUSCA A SER REALIZADA:");
@@ -36,6 +43,14 @@ public class Main {
 
                 System.out.println("Inicio da busca em profundidade:\n");
                 vacuumCleaner = depthFirstSearch.DFS(vacuumCleaner, environment);
+
+                if (vacuumCleaner != null) {
+                    System.out.println("Sequencia de ações até objetivo: \n");
+                    vacuumCleaner.printActionList();
+                    System.out.println("\n\nCusto total:");
+                    System.out.println(vacuumCleaner.getCost());
+                    return ;
+                }
                 break;
 
             case 2:
@@ -43,6 +58,8 @@ public class Main {
 
                 System.out.println("Inicio da busca em largura:\n");
                 vacuumCleaner = breadthFirstSearch.BFS(vacuumCleaner, environment);
+                states = generateStateSequence(vacuumCleaner.getState());
+
                 break;
 
             case 3:
@@ -50,14 +67,13 @@ public class Main {
 
                 System.out.println("Inicio da busca A*:\n");
                 vacuumCleaner = aStarSearch.AStar(vacuumCleaner, environment);
+                states = generateStateSequence(vacuumCleaner.getState());
                 break;
         }
-
-        if (vacuumCleaner != null) {
-            System.out.println("Sequencia de ações até objetivo: \n");
-            vacuumCleaner.printActionList();
+        if (states != null) {
+            showActionsList(vacuumCleaner, states);
             System.out.println("\n\nCusto total:");
             System.out.println(vacuumCleaner.getCost());
-        }
+        } else System.out.println("Lista vazia!");
     }
 }

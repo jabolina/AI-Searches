@@ -12,26 +12,18 @@ import static auxiliary.AuxiliaryFunctions.findRowOnGraph;
 public class BreadthFirstSearch {
 
     private List<State> expanded;
-    private List<State> generated;
     private Queue<State> edge;
 
     public BreadthFirstSearch(State initial) {
         this.expanded = new ArrayList<>();
-        this.generated = new ArrayList<>();
         this.edge = new ArrayDeque<>();
 
-        this.generated.add(initial);
         this.edge.add(initial);
     }
 
     private List<State> getExpanded() {
 
         return expanded;
-    }
-
-    private List<State> getGenerated() {
-
-        return generated;
     }
 
     private Queue<State> getEdge() {
@@ -45,28 +37,24 @@ public class BreadthFirstSearch {
             State actualState = getEdge().remove();
 
             if (!actualState.isObjective()) {
-                int column = -1;
+                int column;
                 int row;
-
-                System.out.println(actualState.toString());
-
-                if (!actualState.equals(environment.getInitialState())) {
-                    column = findColumnOnGraph(actualState, environment);
-                }
 
                 if ((actualState.equals(environment.getInitialState()))) {
                     row = findRowOnGraph(actualState, environment);
                     expanded.add(actualState);
-                    generateStates(row, environment);
+                    generateStates(actualState, row, environment);
                 } else {
+                    column = findColumnOnGraph(actualState, environment);
                     expanded.add(actualState);
-                    generateStates(column, environment);
+                    generateStates(actualState, column, environment);
                 }
 
-                environment.actionPerformed(agent, actualState, environment.getInitialState());
+                agent.setState(actualState);
                 this.BFS(agent, environment);
 
             } else {
+                agent.setState(actualState);
                 return agent;
             }
         } else {
@@ -76,14 +64,14 @@ public class BreadthFirstSearch {
         return agent;
     }
 
-    private void generateStates(int i, Environment environment) {
+    private void generateStates(State actual, int i, Environment environment) {
 
         for (State state: environment.getGraph()[i]) {
             if (state != null) {
                 if (!getExpanded().contains(state) &&
-                        !getGenerated().contains(state)) {
+                        !getEdge().contains(state)) {
 
-                    generated.add(state);
+                    state.setFather(actual);
                     edge.add(state);
                 }
             }

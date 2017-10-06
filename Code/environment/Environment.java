@@ -2,6 +2,7 @@ package environment;
 
 import agent.State;
 import agent.VacuumCleaner;
+import auxiliary.AuxiliaryFunctions;
 
 public class Environment extends EnvironmentSettings {
 
@@ -46,4 +47,5 @@ public class Environment extends EnvironmentSettings {
         vacuumCleaner.getActionsList()
                 .add(state.getAction());
     }
+
 }

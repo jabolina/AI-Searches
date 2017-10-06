@@ -2,6 +2,7 @@ package search;
 
 import agent.State;
 import agent.VacuumCleaner;
+import auxiliary.AuxiliaryFunctions;
 import auxiliary.CostComparator;
 import environment.Environment;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import static auxiliary.AuxiliaryFunctions.*;
 import static auxiliary.AuxiliaryFunctions.findColumnOnGraph;
 import static auxiliary.AuxiliaryFunctions.findRowOnGraph;
 
@@ -37,32 +39,29 @@ public class AStarSearch {
 
 
     public VacuumCleaner AStar(VacuumCleaner agent, Environment environment) {
-        if (getEdge().peek() != null) {
-            State actualState = getEdge().remove();
+
+        if (!getEdge().isEmpty()) {
+            State actualState = getEdge().poll();
 
             if (!actualState.isObjective()) {
-                int column = -1;
+                int column;
                 int row;
-
-                System.out.println(actualState.toString());
-
-                if (!actualState.equals(environment.getInitialState())) {
-                    column = findColumnOnGraph(actualState, environment);
-                }
 
                 if ((actualState.equals(environment.getInitialState()))) {
                     row = findRowOnGraph(actualState, environment);
-                    generateStates(row, environment);
                     expanded.add(actualState);
+                    generateStates(actualState, row, environment);
                 } else {
                     expanded.add(actualState);
-                    generateStates(column, environment);
+                    column = findColumnOnGraph(actualState, environment);
+                    generateStates(actualState, column, environment);
                 }
 
-                environment.actionPerformed(agent, actualState, environment.getInitialState());
+                agent.setState(actualState);
                 this.AStar(agent, environment);
 
             } else {
+                agent.setState(actualState);
                 return agent;
             }
         } else {
@@ -72,13 +71,15 @@ public class AStarSearch {
         return agent;
     }
 
-    private void generateStates(int i, Environment environment) {
+    private void generateStates(State actual, int i, Environment environment) {
 
         for (State state: environment.getGraph()[i]) {
             if (state != null) {
-                if (getExpanded().contains(state) &&
+                if (!getExpanded().contains(state) &&
                         !getEdge().contains(state)) {
 
+                    state.setHeuristicCost(heuristic(state) + 1);
+                    state.setFather(actual);
                     edge.add(state);
                 }
             }

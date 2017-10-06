@@ -9,8 +9,8 @@ public class CostComparator implements Comparator<State> {
     @Override
     public int compare(State state, State t1) {
 
-        if (state.getAction().valueOf(state.getAction()) < t1.getAction().valueOf(t1.getAction())) return -1;
-        if (state.getAction().valueOf(state.getAction()) > t1.getAction().valueOf(t1.getAction())) return 1;
+        if (state.getHeuristicCost() < t1.getHeuristicCost()) return -1;
+        if (state.getHeuristicCost() > t1.getHeuristicCost()) return 1;
         return 0;
     }
 }

@@ -6,6 +6,8 @@ public class State {
     private boolean tileB;
     private char side;
     private boolean objective;
+    private State father;
+    private int heuristicCost;
     private Actions action;
 
     public boolean getTileA() {
@@ -31,6 +33,36 @@ public class State {
     public char getSide() {
 
         return side;
+    }
+
+    public State getFather() {
+
+        return father;
+    }
+
+    public void setFather(State father) {
+
+        this.father = father;
+    }
+
+    public State father(State state) {
+        this.father = state;
+        return this;
+    }
+
+    public int getHeuristicCost() {
+
+        return heuristicCost;
+    }
+
+    public void setHeuristicCost(int heuristicCost) {
+
+        this.heuristicCost = heuristicCost;
+    }
+
+    public State heuristicCost(int heuristicCost) {
+        this.heuristicCost = heuristicCost;
+        return this;
     }
 
     public Actions getAction() {
