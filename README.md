@@ -11,4 +11,11 @@ Possible actions are:
 In this repo, have the DFS, BFS and A* searches implemented.
 
    * Depth First Search implemented on class DepthFirstSearch
-   * Breadth First Search implemented on classh BreadthFirstSearch (loop problem)
+   * Breadth First Search implemented on classh BreadthFirstSearch
+   * A* implemented on AStarSearch, the heuristic consist in counting how many tiles still dirty, then multiply by 5.
+<br>
+The costs are:
+   
+   Go left  --> 1
+   Go right --> 1
+   Apirate  --> 5
